@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="menu-toggle">
+                <div class="hamburger"></div>
+            </div>
+            <div class="logo">
+                <span>King</span> <span class="red-text">casino</span>
+                <img src="/image/logo1.png" alt="Иконка">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" id="signInBtn">Sign in</a></li>
+                    <li><a href="#" id="registerBtn">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="side-menu">
+        <div class="grey-block">
+            <div class="games-title">
+                Games
+                <div class="underline"></div>
+            </div>
+            <ul>
+                <li><a href="#">Button 1</a></li>
+                <li><a href="#">Button 2</a></li>
+                <li><a href="#">Button 3</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+        <p>Основное содержимое страницы здесь.</p>
+    </div>
+
+    <!-- Модальное окно для Sign In -->
+    <div class="modal" id="modalSignIn">
+        <div class="modal-content">
+            <span class="close-btn" id="closeSignIn">&times;</span>
+            <div class="modal-logo">
+                <a src="/"><span>King</span><span class="red-text">casino</span>
+                <img src="/image/logo1.png" alt="Иконка"></a>
+            </div>
+            <h2>Sign In</h2>
+            <form>
+                <label for="usernameSignIn">Username:</label>
+                <input type="text" id="usernameSignIn" name="usernameSignIn" required>
+                <label for="passwordSignIn">Password:</label>
+                <input type="password" id="passwordSignIn" name="passwordSignIn" required>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+    <!-- Модальное окно для Register -->
+    <div class="modal" id="modalRegister">
+        <div class="modal-content">
+            <span class="close-btn" id="closeRegister">&times;</span>
+            <div class="modal-logo">
+                <span>King</span> <span class="red-text">casino</span>
+                <img src="/image/logo1.png" alt="Иконка">
+            </div>
+            <h2>Register</h2>
+            <form>
+                <label for="email">Email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required>
+                <label for="username">Username <span class="required">*</span></label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password <span class="required">*</span></label>
+                <input type="password" id="password" name="password" required>
+                <label for="dob">Date of Birth <span class="required">*</span></label>
+                <input type="date" id="dob" name="dob" required>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.side-menu').classList.toggle('active');
+        });
+
+        const modalSignIn = document.getElementById('modalSignIn');
+        const signInBtn = document.getElementById('signInBtn');
+        const closeSignIn = document.getElementById('closeSignIn');
+
+        signInBtn.addEventListener('click', function() {
+            modalSignIn.style.display = 'block';
+        });
+
+        closeSignIn.addEventListener('click', function() {
+            modalSignIn.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modalSignIn) {
+                modalSignIn.style.display = 'none';
+            }
+        });
+
+        const modalRegister = document.getElementById('modalRegister');
+const registerBtn = document.getElementById('registerBtn');
+const closeRegister = document.getElementById('closeRegister');
+
+registerBtn.addEventListener('click', function() {
+    modalRegister.style.display = 'block';
+});
+
+closeRegister.addEventListener('click', function() {
+    modalRegister.style.display = 'none';
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target === modalRegister) {
+        modalRegister.style.display = 'none';
+    }
+});
+
+// Добавляем обработчик отправки формы
+const registerForm = document.querySelector('#modalRegister form');
+registerForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Предотвращаем отправку формы
+
+    // Получаем значение поля даты рождения
+    const dobInput = document.getElementById('dob');
+    const dobValue = new Date(dobInput.value);
+    const today = new Date();
+
+    // Вычисляем возраст пользователя
+    const age = today.getFullYear() - dobValue.getFullYear();
+    const monthDiff = today.getMonth() - dobValue.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobValue.getDate())) {
+        age--;
+    }
+
+    // Проверяем возраст
+    if (age < 18) {
+        alert('Access limited to minors!');
+    } else {
+        // Если возраст >= 18, можно выполнить дальнейшие действия, например, отправить данные на сервер
+        // Это пример, здесь можно добавить дополнительную логику или отправку данных
+        alert('Registration successful!'); // Замените на нужную логику
+        modalRegister.style.display = 'none';
+    }
+});
+const logo = document.querySelector('.logo');
+
+logo.addEventListener('click', function() {
+    window.location.href = 'index.html'; // Замените 'index.html' на вашу главную страницу
+});
+    </script>
+</body>
+</html>
